@@ -54,8 +54,6 @@ for pos, link in enumerate(all_links):
             # print(link.get("href")[0 : ind])
             url = 'http://shakespeare.mit.edu/' + href[0 : ind] + '/full.html'
             allPlays.append(url)
-    # print([pos for pos, char in enumerate(link) if char == '/'])
-# print(allPlays)
 
 for play in allPlays:
     page = urllib.request.urlopen(play)
