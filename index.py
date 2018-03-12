@@ -6,6 +6,7 @@ page = urllib.request.urlopen(wiki)
 from bs4 import BeautifulSoup
 # soup = BeautifulSoup(page, "html5lib")
 # print(soup.prettify())
+import pandas as pd
 
 # right_table=soup.find('table', class_='wikitable sortable plainrowheaders')
 #
@@ -53,6 +54,7 @@ for pos, link in enumerate(all_links):
 
 allStrings = []
 allSpeakers = []
+allText = []
 
 for ind, play in enumerate(allPlays):
     if ind == 31:
@@ -63,12 +65,13 @@ for ind, play in enumerate(allPlays):
 print(allStrings)
 
 for s in allStrings:
-    # if s[9] == 's':
-    #     print(s)
-    # print(str(s)[9])
     if (str(s)[9] == 's'):
         ind = str(s).find('b>') + 2
         end = str(s).find('</')
         allSpeakers.append(str(s)[ind : end])
+    else:
+        ind = str(s).find('">') + 2
+        end = str(s).find('</')
+        allText.append(str(s)[ind : end])
 
-print(allSpeakers)
+print(allText)
