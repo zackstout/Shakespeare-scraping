@@ -7,14 +7,6 @@ from bs4 import BeautifulSoup
 # soup = BeautifulSoup(page, "html5lib")
 # print(soup.prettify())
 
-# title = soup.title.string
-#
-# all_links = soup.find_all("a")
-# # for link in all_links:
-#     # print(link.get("href"))
-#
-# all_tables = soup.find_all('table')
-#
 # right_table=soup.find('table', class_='wikitable sortable plainrowheaders')
 #
 # A=[]
@@ -37,6 +29,10 @@ from bs4 import BeautifulSoup
 #         G.append(cells[5].find(text=True))
 
 # print(C)
+
+
+
+# Shakespeare plays:
 allPlays = []
 
 shakespeare = 'http://shakespeare.mit.edu/'
@@ -55,7 +51,24 @@ for pos, link in enumerate(all_links):
             url = 'http://shakespeare.mit.edu/' + href[0 : ind] + '/full.html'
             allPlays.append(url)
 
-for play in allPlays:
-    page = urllib.request.urlopen(play)
-    soup2 = BeautifulSoup(page, "html5lib")
-    print(soup2)
+allStrings = []
+allSpeakers = []
+
+for ind, play in enumerate(allPlays):
+    if ind == 31:
+        page = urllib.request.urlopen(play)
+        soup2 = BeautifulSoup(page, "html5lib")
+        allStrings = soup2.findAll('a')
+
+print(allStrings)
+
+for s in allStrings:
+    # if s[9] == 's':
+    #     print(s)
+    # print(str(s)[9])
+    if (str(s)[9] == 's'):
+        ind = str(s).find('b>') + 2
+        end = str(s).find('</')
+        allSpeakers.append(str(s)[ind : end])
+
+print(allSpeakers)
