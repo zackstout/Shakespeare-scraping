@@ -34,7 +34,19 @@ import pandas as pd
 
 
 # Shakespeare plays:
+# Holds urls:
 allPlays = []
+# Holds all strings:
+allStrings = []
+allSpeakers = []
+allText = []
+allDictionaries = []
+
+speakerCounts = []
+currentSpeaker = ''
+currentCount = 0
+
+speakersDict = dict()
 
 shakespeare = 'http://shakespeare.mit.edu/'
 page = urllib.request.urlopen(shakespeare)
@@ -42,36 +54,78 @@ soup = BeautifulSoup(page, "html5lib")
 
 all_links = (soup.find_all('a'))
 
-for pos, link in enumerate(all_links):
-    # print(link.get("href"))
-    href = link.get("href")
-    ind = href.find("/")
-    if pos > 1 and pos < len(all_links) - 7:
-        if not ind == -1:
-            # print(link.get("href")[0 : ind])
-            url = 'http://shakespeare.mit.edu/' + href[0 : ind] + '/full.html'
-            allPlays.append(url)
+def generateLinks():
+    for pos, link in enumerate(all_links):
+        # print(link.get("href"))
+        href = link.get("href")
+        ind = href.find("/")
+        if pos > 1 and pos < len(all_links) - 7:
+            if not ind == -1:
+                # print(link.get("href")[0 : ind])
+                url = 'http://shakespeare.mit.edu/' + href[0 : ind] + '/full.html'
+                allPlays.append(url)
 
-allStrings = []
-allSpeakers = []
-allText = []
 
-for ind, play in enumerate(allPlays):
-    if ind == 31:
-        page = urllib.request.urlopen(play)
-        soup2 = BeautifulSoup(page, "html5lib")
-        allStrings = soup2.findAll('a')
+generateLinks()
 
-print(allStrings)
+def getPlay(x):
 
-for s in allStrings:
-    if (str(s)[9] == 's'):
-        ind = str(s).find('b>') + 2
-        end = str(s).find('</')
-        allSpeakers.append(str(s)[ind : end])
-    else:
-        ind = str(s).find('">') + 2
-        end = str(s).find('</')
-        allText.append(str(s)[ind : end])
+    global currentCount
+    global currentSpeaker
+    global allDictionaries
 
-print(allText)
+    for ind, play in enumerate(allPlays):
+        if ind == x:
+            page = urllib.request.urlopen(play)
+            soup2 = BeautifulSoup(page, "html5lib")
+            allStrings = soup2.findAll('a')
+
+    # print(allStrings)
+    # for s in allStrings:
+    #     print(s)
+    #     print('\n')
+
+    for s in allStrings:
+        if (str(s)[9] == 's'):
+            ind = str(s).find('b>') + 2
+            end = str(s).find('</')
+            allSpeakers.append(str(s)[ind : end])
+
+            # Switch to new speaker:
+            oldSpeaker = currentSpeaker
+
+            if oldSpeaker in speakersDict:
+                speakersDict[oldSpeaker] += currentCount
+            else:
+                speakersDict[oldSpeaker] = currentCount
+
+            currentSpeaker = str(s)[ind : end]
+            currentCount = 0
+
+        else:
+            ind = str(s).find('">') + 2
+            end = str(s).find('</')
+
+            ind2 = str(s).find('="')
+            data = {}
+            # Odd we couldn't use dot notation here:
+            data['line'] = str(s)[ind:end]
+            data['lineNo'] = str(s)[ind2 + 2:ind - 2]
+            allText.append(data)
+
+            # Increment current speaker's count:
+            currentCount = currentCount + 1
+
+        allDictionaries.append(speakersDict)
+
+# getPlay(31)
+
+
+# for x in range(35):
+    # getPlay(x)
+# getPlay(1)
+getPlay(2)
+
+# print(len(allText))
+# print(allText)
+print(allDictionaries)
