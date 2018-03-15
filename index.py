@@ -69,9 +69,14 @@ def generateLinks():
 generateLinks()
 
 def getPlay(x):
+    speakersDict = dict()
 
+    allStrings = []
+    allText = []
     global currentCount
+    currentCount = 0
     global currentSpeaker
+    currentSpeaker = ''
     global allDictionaries
 
     for ind, play in enumerate(allPlays):
@@ -115,16 +120,16 @@ def getPlay(x):
 
             # Increment current speaker's count:
             currentCount = currentCount + 1
-
-        allDictionaries.append(speakersDict)
+    # AHA!  We had this inside the for loop!!!!
+    allDictionaries.append(speakersDict)
 
 # getPlay(31)
 
 
-# for x in range(35):
-    # getPlay(x)
+for x in range(35):
+    getPlay(x)
 # getPlay(1)
-getPlay(2)
+# getPlay(2)
 
 # print(len(allText))
 # print(allText)
