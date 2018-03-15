@@ -8,6 +8,12 @@ from bs4 import BeautifulSoup
 # print(soup.prettify())
 import pandas as pd
 
+import numpy as np
+import matplotlib.pyplot as plt
+
+from matplotlib import style
+style.use('fivethirtyeight')
+
 # right_table=soup.find('table', class_='wikitable sortable plainrowheaders')
 #
 # A=[]
@@ -123,14 +129,46 @@ def getPlay(x):
     # AHA!  We had this inside the for loop!!!!
     allDictionaries.append(speakersDict)
 
-# getPlay(31)
+getPlay(31)
 
 
-for x in range(35):
-    getPlay(x)
+# for x in range(38):
+#     getPlay(x)
 # getPlay(1)
 # getPlay(2)
 
 # print(len(allText))
 # print(allText)
-print(allDictionaries)
+# print(allDictionaries)
+
+# for d in allDictionaries:
+#     print(d)
+#     print('\n')
+
+speakers = []
+counts = []
+
+# print(allDictionaries[0]['LEAR'])
+
+for key in allDictionaries[0]:
+    speakers.append(key)
+    counts.append(allDictionaries[0][key])
+
+print(speakers)
+print(counts)
+
+fig, ax1 = plt.subplots(1,1)
+
+y_pos = np.arange(len(speakers))
+
+ax = plt.bar(y_pos, counts, align='center', alpha=0.5)
+plt.xticks(y_pos, speakers, rotation='vertical')
+plt.ylabel('Lines')
+plt.title('Lines per Speaker in King Lear')
+
+ax1.set_xticklabels(speakers, {'rotation':80, 'fontsize':8})
+
+# print(ax.get_xticks())
+# axes.tick_params( axis='x', width=10, length=10)
+# print(plt)
+plt.show()
