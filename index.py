@@ -129,7 +129,7 @@ def getPlay(x):
     # AHA!  We had this inside the for loop!!!!
     allDictionaries.append(speakersDict)
 
-getPlay(31)
+getPlay(26)
 
 
 # for x in range(38):

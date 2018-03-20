@@ -11,3 +11,7 @@ Scraping MIT's [Shakespeare site](http://shakespeare.mit.edu/) to get the text o
 
 ## Next Steps:
 - [ ] Create a dataframe with Pandas
+- [ ] Hook up to Rails
+- [ ] Display a list of each of an inputted characters' lines
+- [ ] Do sentiment analysis on each line
+- [ ] Users can input a customized regex ('starts with', 'ends with', etc.) and view the result
