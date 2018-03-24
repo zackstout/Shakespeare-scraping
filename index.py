@@ -32,6 +32,12 @@ counts = []
 # Example items will be {"speaker": "King Lear", }
 masterList = []
 
+# Whoops, dataframe wants object of arrays, not vice versa:
+masterDict = dict()
+masterDict['Speakers'] = []
+masterDict['Lines'] = []
+masterDict['LineNos'] = []
+
 speakerCounts = []
 currentSpeaker = ''
 currentCount = 0
@@ -116,12 +122,17 @@ def getPlay(x):
             allText.append(data)
 
             # Add to master list for dataframe:
-            dataObj = dict()
-            dataObj["speaker"] = currentSpeaker
-            dataObj["line"] = str(s)[ind: end]
-            dataObj["lineNo"] = str(s)[ind2 + 2: ind - 2]
+            # dataObj = dict()
+            # dataObj["speaker"] = currentSpeaker
+            # dataObj["line"] = str(s)[ind: end]
+            # dataObj["lineNo"] = str(s)[ind2 + 2: ind - 2]
+            #
+            # masterList.append(dataObj)
 
-            masterList.append(dataObj)
+            # Whoops, it wants an object of arrays, not an array of objects:
+            masterDict['Speakers'].append(currentSpeaker)
+            masterDict['Lines'].append(str(s)[ind: end])
+            masterDict['LineNos'].append(str(s)[ind2 + 2: ind - 2])
 
 
             # Increment current speaker's count:
@@ -132,8 +143,15 @@ def getPlay(x):
 getPlay(32)
 
 
-print(masterList)
+# print(masterList)
 # print(allText)
+
+# print(masterDict)
+
+df = pd.DataFrame(masterDict)
+
+print(df.head(10))
+
 
 
 # for x in range(38):
