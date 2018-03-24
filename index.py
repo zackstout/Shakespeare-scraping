@@ -140,17 +140,65 @@ def getPlay(x):
     # AHA!  We had this inside the for loop!!!!
     allDictionaries.append(speakersDict)
 
-getPlay(32)
+# getPlay(32)
+#
+# # clear it out:
+# masterDict = dict()
+# masterDict['Speakers'] = []
+# masterDict['Lines'] = []
+# masterDict['LineNos'] = []
+# getPlay(31)
+#
+# # print(masterList)
+# # print(allText)
+#
+# # print(masterDict)
+#
+# df = pd.DataFrame(masterDict)
+#
+# print(df.head(2))
+#
+# print(df['Lines'][1])
 
 
-# print(masterList)
-# print(allText)
 
-# print(masterDict)
 
-df = pd.DataFrame(masterDict)
+# Awesome, this generates all our csvs:
+# for i in range(0, 37):
+#     masterDict = dict()
+#     masterDict['Speakers'] = []
+#     masterDict['Lines'] = []
+#     masterDict['LineNos'] = []
+#
+#     getPlay(i)
+#
+#     df = pd.DataFrame(masterDict)
+#     # print(df['Lines'][1])
+#
+#     name = ''
+#     for c in df['Lines'][1]:
+#         if c != ' ' and c != "'":
+#             name += c
+#     print(name)
+#
+#     name += '.csv'
+#
+#     df.to_csv(name)
 
+
+df = pd.read_csv('KingLear.csv', index_col=0)
 print(df.head(10))
+
+
+# df.to_csv('macbeth.csv')
+
+
+
+# df = pd.read_csv('macbeth.csv', index_col=0)
+#
+# print(df.head(10))
+
+
 
 
 

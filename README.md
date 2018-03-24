@@ -9,6 +9,7 @@ Scraping MIT's [Shakespeare site](http://shakespeare.mit.edu/) to get the text o
 ![screen shot 2018-03-14 at 8 58 19 pm](https://user-images.githubusercontent.com/29472568/37440407-9557b6d0-27ca-11e8-8763-7d4e4bfb337c.png)
 
 Dataframe's head:
+
 ![screen shot 2018-03-24 at 10 49 27 am](https://user-images.githubusercontent.com/29472568/37866181-ff97c774-2f54-11e8-8597-5dd6a9e850cf.png)
 
 
