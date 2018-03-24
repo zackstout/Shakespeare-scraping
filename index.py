@@ -1,10 +1,10 @@
 
-# Following along with https://www.analyticsvidhya.com/blog/2015/10/beginner-guide-web-scraping-beautiful-soup-python/:
+# Next steps: put into DB, and run some NLTK analyses
+
 import urllib.request, urllib.error
 wiki = "https://en.wikipedia.org/wiki/List_of_state_and_union_territory_capitals_in_India"
 page = urllib.request.urlopen(wiki)
 from bs4 import BeautifulSoup
-# soup = BeautifulSoup(page, "html5lib")
 # print(soup.prettify())
 import pandas as pd
 
@@ -14,12 +14,6 @@ import matplotlib.pyplot as plt
 from matplotlib import style
 style.use('fivethirtyeight')
 
-
-
-
-# Next steps: put into DB, and run some NLTK analyses
-
-# Shakespeare plays:
 # Holds urls:
 allPlays = []
 # Holds all strings:
@@ -27,6 +21,16 @@ allStrings = []
 allSpeakers = []
 allText = []
 allDictionaries = []
+
+# For our chart of number of lines per speaker:
+speakers = []
+counts = []
+
+
+
+# Master dictionary:
+# Example items will be {"speaker": "King Lear", }
+masterList = dict()
 
 speakerCounts = []
 currentSpeaker = ''
@@ -55,8 +59,8 @@ def generateLinks():
 generateLinks()
 
 def getPlay(x):
+    # Clear everything out in case we're getting multiple plays:
     speakersDict = dict()
-
     allStrings = []
     allText = []
     global currentCount
@@ -65,18 +69,20 @@ def getPlay(x):
     currentSpeaker = ''
     global allDictionaries
 
+    # There must be a cleaner way to do this:
     for ind, play in enumerate(allPlays):
         if ind == x:
             page = urllib.request.urlopen(play)
             soup2 = BeautifulSoup(page, "html5lib")
             allStrings = soup2.findAll('a')
 
-    # print(allStrings)
-    # for s in allStrings:
-    #     print(s)
-    #     print('\n')
+    # Prints out all the strings (list of lines or speakers):
+    for s in allStrings:
+        print(s)
+        print('\n')
 
     for s in allStrings:
+        # We have a new speaker:
         if (str(s)[9] == 's'):
             ind = str(s).find('b>') + 2
             end = str(s).find('</')
@@ -85,6 +91,7 @@ def getPlay(x):
             # Switch to new speaker:
             oldSpeaker = currentSpeaker
 
+            # Do we already have this speaker?
             if oldSpeaker in speakersDict:
                 speakersDict[oldSpeaker] += currentCount
             else:
@@ -93,6 +100,7 @@ def getPlay(x):
             currentSpeaker = str(s)[ind : end]
             currentCount = 0
 
+        # We have a line:
         else:
             ind = str(s).find('">') + 2
             end = str(s).find('</')
@@ -125,8 +133,6 @@ getPlay(32)
 #     print(d)
 #     print('\n')
 
-speakers = []
-counts = []
 
 # print(allDictionaries[0]['LEAR'])
 
@@ -134,8 +140,8 @@ for key in allDictionaries[0]:
     speakers.append(key)
     counts.append(allDictionaries[0][key])
 
-print(speakers)
-print(counts)
+# print(speakers)
+# print(counts)
 
 fig, ax1 = plt.subplots(1,1)
 
@@ -151,4 +157,10 @@ ax1.set_xticklabels(speakers, {'rotation':80, 'fontsize':8})
 # print(ax.get_xticks())
 # axes.tick_params( axis='x', width=10, length=10)
 # print(plt)
-plt.show()
+
+
+
+
+
+
+# plt.show()
