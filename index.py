@@ -30,7 +30,7 @@ counts = []
 
 # Master dictionary:
 # Example items will be {"speaker": "King Lear", }
-masterList = dict()
+masterList = []
 
 speakerCounts = []
 currentSpeaker = ''
@@ -62,7 +62,10 @@ def getPlay(x):
     # Clear everything out in case we're getting multiple plays:
     speakersDict = dict()
     allStrings = []
-    allText = []
+
+    # Need to get rid of this in order to not clear it out before we can print it:
+    # allText = []
+
     global currentCount
     currentCount = 0
     global currentSpeaker
@@ -77,9 +80,9 @@ def getPlay(x):
             allStrings = soup2.findAll('a')
 
     # Prints out all the strings (list of lines or speakers):
-    for s in allStrings:
-        print(s)
-        print('\n')
+    # for s in allStrings:
+    #     print(s)
+    #     print('\n')
 
     for s in allStrings:
         # We have a new speaker:
@@ -112,6 +115,15 @@ def getPlay(x):
             data['lineNo'] = str(s)[ind2 + 2:ind - 2]
             allText.append(data)
 
+            # Add to master list for dataframe:
+            dataObj = dict()
+            dataObj["speaker"] = currentSpeaker
+            dataObj["line"] = str(s)[ind: end]
+            dataObj["lineNo"] = str(s)[ind2 + 2: ind - 2]
+
+            masterList.append(dataObj)
+
+
             # Increment current speaker's count:
             currentCount = currentCount + 1
     # AHA!  We had this inside the for loop!!!!
@@ -120,10 +132,12 @@ def getPlay(x):
 getPlay(32)
 
 
+print(masterList)
+# print(allText)
+
+
 # for x in range(38):
 #     getPlay(x)
-# getPlay(1)
-# getPlay(2)
 
 # print(len(allText))
 # print(allText)
@@ -136,6 +150,8 @@ getPlay(32)
 
 # print(allDictionaries[0]['LEAR'])
 
+
+# Preparing our chart:
 for key in allDictionaries[0]:
     speakers.append(key)
     counts.append(allDictionaries[0][key])
@@ -153,11 +169,6 @@ plt.ylabel('Lines')
 plt.title('Lines per Speaker in King Lear')
 
 ax1.set_xticklabels(speakers, {'rotation':80, 'fontsize':8})
-
-# print(ax.get_xticks())
-# axes.tick_params( axis='x', width=10, length=10)
-# print(plt)
-
 
 
 
