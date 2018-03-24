@@ -26,6 +26,45 @@ allDictionaries = []
 speakers = []
 counts = []
 
+allCsvs = [
+'AllsWellThatEndsWell',
+'AntonyandCleopatra',
+'AsYouLikeIt',
+'ComedyofErrors',
+'Coriolanus',
+'Cymbeline',
+'Hamlet',
+'HenryIV,part1',
+'HenryIV,part2',
+'HenryV',
+'HenryVI,part1',
+'HenryVI,part2',
+'HenryVIII',
+'JuliusCaesar',
+'KingJohn',
+'KingLear',
+'LovesLaboursLost',
+'Macbeth',
+'MeasureforMeasure',
+'MerchantofVenice',
+'MerryWivesofWindsor',
+'MidsummerNightsDream',
+'MuchAdoAboutNothing',
+'Othello',
+'Pericles',
+'RichardII',
+'RichardIII',
+'RomeoandJuliet',
+'TamingoftheShrew',
+'TheTempest',
+'TimonofAthens',
+'TitusAndronicus',
+'TroilesandCressida',
+'TwelfthNight',
+'TwoGentlemenofVerona',
+'WintersTale'
+]
+
 
 
 # Master dictionary:
@@ -129,7 +168,7 @@ def getPlay(x):
             #
             # masterList.append(dataObj)
 
-            # Whoops, it wants an object of arrays, not an array of objects:
+            # Whoops, pandas wants an object of arrays, not an array of objects:
             masterDict['Speakers'].append(currentSpeaker)
             masterDict['Lines'].append(str(s)[ind: end])
             masterDict['LineNos'].append(str(s)[ind2 + 2: ind - 2])
@@ -186,8 +225,8 @@ def getPlay(x):
 #     df.to_csv(name)
 
 
-df = pd.read_csv('KingLear.csv', index_col=0)
-print(df.head(10))
+# df = pd.read_csv('csvs/KingLear.csv', index_col=0)
+# print(df.head(10))
 
 
 # df.to_csv('macbeth.csv')
@@ -199,6 +238,10 @@ print(df.head(10))
 # print(df.head(10))
 
 
+for csv in allCsvs:
+    filename = 'csvs/' + csv + '.csv'
+    df = pd.read_csv(filename, index_col=0)
+    print(df.head(5))
 
 
 
@@ -218,23 +261,23 @@ print(df.head(10))
 
 
 # Preparing our chart:
-for key in allDictionaries[0]:
-    speakers.append(key)
-    counts.append(allDictionaries[0][key])
-
-# print(speakers)
-# print(counts)
-
-fig, ax1 = plt.subplots(1,1)
-
-y_pos = np.arange(len(speakers))
-
-ax = plt.bar(y_pos, counts, align='center', alpha=0.5)
-plt.xticks(y_pos, speakers, rotation='vertical')
-plt.ylabel('Lines')
-plt.title('Lines per Speaker in King Lear')
-
-ax1.set_xticklabels(speakers, {'rotation':80, 'fontsize':8})
+# for key in allDictionaries[0]:
+#     speakers.append(key)
+#     counts.append(allDictionaries[0][key])
+#
+# # print(speakers)
+# # print(counts)
+#
+# fig, ax1 = plt.subplots(1,1)
+#
+# y_pos = np.arange(len(speakers))
+#
+# ax = plt.bar(y_pos, counts, align='center', alpha=0.5)
+# plt.xticks(y_pos, speakers, rotation='vertical')
+# plt.ylabel('Lines')
+# plt.title('Lines per Speaker in King Lear')
+#
+# ax1.set_xticklabels(speakers, {'rotation':80, 'fontsize':8})
 
 
 
