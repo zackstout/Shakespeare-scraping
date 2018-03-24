@@ -39,6 +39,10 @@ style.use('fivethirtyeight')
 
 
 
+
+
+# Next steps: put into DB, and run some NLTK analyses
+
 # Shakespeare plays:
 # Holds urls:
 allPlays = []
@@ -129,7 +133,7 @@ def getPlay(x):
     # AHA!  We had this inside the for loop!!!!
     allDictionaries.append(speakersDict)
 
-getPlay(26)
+getPlay(32)
 
 
 # for x in range(38):
