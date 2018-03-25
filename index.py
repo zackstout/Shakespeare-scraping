@@ -1,5 +1,11 @@
 
 # Next steps: put into DB, and run some NLTK analyses
+# Replace every word with its synonym
+# Analyze positivity of each play
+# Can we measure like subjunctives and indicatives?
+# Which characters pose the most questions?
+# Male vs female speech (would involve hard coding...)
+
 
 import urllib.request, urllib.error
 wiki = "https://en.wikipedia.org/wiki/List_of_state_and_union_territory_capitals_in_India"
@@ -237,11 +243,36 @@ def getPlay(x):
 #
 # print(df.head(10))
 
+dataframes = []
+# main_df = pd.read_csv('csvs/AllsWellThatEndsWell.csv', index_col=0)
+# main_df.set_index("LineNos", inplace=True)
 
 for csv in allCsvs:
     filename = 'csvs/' + csv + '.csv'
     df = pd.read_csv(filename, index_col=0)
-    print(df.head(5))
+
+    # df.set_index("LineNos", inplace=True)
+
+    # print(df.head(5))
+    dataframes.append(df)
+    # main_df.join(df, lsuffix="_left", rsuffix="_right")
+
+
+for d in dataframes:
+    # print(d.head(5))
+
+    # First line of each play:
+    print(d["Lines"][2:12])
+    print("\n")
+
+# concat = pd.concat(dataframes);
+#
+# print(main_df)
+
+
+
+
+
 
 
 
