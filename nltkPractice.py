@@ -12,6 +12,12 @@ from nltk.corpus import stopwords
 
 from textblob import TextBlob
 
+import numpy as np
+import matplotlib.pyplot as plt
+
+from matplotlib import style
+style.use('fivethirtyeight')
+
 
 # Note: cannot name file "nltk.py"
 
@@ -87,6 +93,7 @@ moreBlobs = []
 sentiments = []
 allData = []
 
+# Unfortunate that we had to resort to textblob, couldn't get nltk sentiment working.
 for i, csv in enumerate(allCsvs):
     filename = 'csvs/' + csv + '.csv'
     df = pd.read_csv(filename, index_col=0)
@@ -99,7 +106,8 @@ for i, csv in enumerate(allCsvs):
     # print(df["Lines"][2:22])
     # print("\n")
 
-    for line in df["Lines"][2:22]:
+    # Gonna go through ALL of each play!
+    for line in df["Lines"][2:]:
         blob += line
         blob += ' '
 
@@ -117,13 +125,25 @@ for i, csv in enumerate(allCsvs):
 
 # print(blobs)
 # print(moreBlobs)
-print(sentiments)
-print(allData)
+# print(sentiments)
+# print(allData)
 
 
 
+fig, ax1 = plt.subplots(1,1)
+fig.subplots_adjust(bottom=0.2)
+
+y_pos = np.arange(len(allCsvs))
+
+ax = plt.bar(y_pos, sentiments, align='center', alpha=0.5)
+plt.xticks(y_pos, allCsvs, rotation='vertical')
+plt.ylabel('Sentiment')
+plt.title('Sentiment of All of each Play')
+
+ax1.set_xticklabels(allCsvs, {'rotation':80, 'fontsize':8})
 
 
+plt.show()
 
 
 # stop_words = set(stopwords.words('english'))
