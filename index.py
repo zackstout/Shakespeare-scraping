@@ -20,6 +20,36 @@ import matplotlib.pyplot as plt
 from matplotlib import style
 style.use('fivethirtyeight')
 
+# Must pip3 install mysql-connector-python:
+import mysql.connector
+cnx = mysql.connector.connect(user='root', password='root',
+                              host='127.0.0.1',
+                              database='deneb')
+
+cursor = cnx.cursor(buffered=True) # Thx again SO
+
+def getData():
+    query = "SELECT * FROM dogs"
+
+    cursor.execute(query)
+
+    print(cursor)
+    for x in cursor:
+        print(x)
+
+    cursor.close()
+    cnx.close()
+
+
+# getData();
+
+# def postData():
+#     query =
+
+
+
+
+
 # Holds urls:
 allPlays = []
 # Holds all strings:
@@ -138,6 +168,7 @@ def getPlay(x):
     for s in allStrings:
         # We have a new speaker:
         if (str(s)[9] == 's'):
+            # Using the fact that (all and only) speakers appear in bold:
             ind = str(s).find('b>') + 2
             end = str(s).find('</')
             allSpeakers.append(str(s)[ind : end])
@@ -183,6 +214,7 @@ def getPlay(x):
             # Increment current speaker's count:
             currentCount = currentCount + 1
     # AHA!  We had this inside the for loop!!!!
+    # so this was for getting number of lines for each speaker, right?:
     allDictionaries.append(speakersDict)
 
 # getPlay(32)
@@ -258,12 +290,19 @@ for csv in allCsvs:
     # main_df.join(df, lsuffix="_left", rsuffix="_right")
 
 
-for d in dataframes:
+# for d in dataframes:
     # print(d.head(5))
 
-    # First line of each play:
-    print(d["Lines"][2:12])
-    print("\n")
+    # First 100 lines of each play:
+    # print(d["Lines"][2:5])
+    # print("\n")
+
+
+
+
+
+
+
 
 # concat = pd.concat(dataframes);
 #
